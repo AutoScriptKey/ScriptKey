@@ -10,12 +10,27 @@ import java.util.*;
  * up a standard String of arguments into file paths
  * and startup options.
  */
+@SuppressWarnings("unused")
 public class Arguments {
 
+    /**
+     * The prefix put before arguments which donate
+     * a boolean flag.
+     * E.g. -useFlags
+     */
     private static final String FLAG_PREFIX = "-";
 
+    /**
+     * The prefix put before arguments which specify
+     * a key and a value.
+     * E.g. --key=value
+     */
     private static final String OPTION_PREFIX = "--";
 
+    /**
+     * Prefix for arguments which specify the name of a
+     * file, for specific types of files.
+     */
     private static final String FILETYPE_PREFIX = "/";
 
     private final String[] arguments;
@@ -65,6 +80,84 @@ public class Arguments {
                 }
             }
         }
+    }
+
+    public File[] getFiles() {
+        return this.files.toArray(new File[0]);
+    }
+
+    public int getFileCount() {
+        return this.files.size();
+    }
+
+    public boolean hasFiles() {
+        return getFileCount() > 0;
+    }
+
+    public String[] getFlags() {
+        return this.flags.toArray(new String[0]);
+    }
+
+    public boolean hasFlag(String flag) {
+        return this.flags.contains(flag);
+    }
+
+    public int getFlagCount() {
+        return this.flags.size();
+    }
+
+    public boolean hasFlags() {
+        return getFileCount() > 0;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map.Entry<String, Object>[] getOptions () {
+        return options.entrySet().toArray(new Map.Entry[0]);
+    }
+
+    public Object getOption(String name) {
+        if(options.containsKey(name)) {
+            return options.get(name);
+        }
+
+        return null;
+    }
+
+    public int getOptionCount() {
+        return this.options.size();
+    }
+
+    public boolean hasOptions() {
+        return getOptionCount() > 0;
+    }
+
+    public boolean hasOption(String name) {
+        return this.options.containsKey(name);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map.Entry<String, File>[] getNamedFiles () {
+        return namedFiles.entrySet().toArray(new Map.Entry[0]);
+    }
+
+    public File getNamedFile(String name) {
+        if(namedFiles.containsKey(name)) {
+            return namedFiles.get(name);
+        }
+
+        return null;
+    }
+
+    public int getNamedFileCount() {
+        return this.namedFiles.size();
+    }
+
+    public boolean hasNamedFiles() {
+        return getNamedFileCount() > 0;
+    }
+
+    public boolean hasNamedFile(String name) {
+        return this.namedFiles.containsKey(name);
     }
 
     @Override
