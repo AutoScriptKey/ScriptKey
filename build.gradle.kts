@@ -1,14 +1,12 @@
-import java.util.*
-
 plugins {
     id("java"); id("application"); id("idea")
 }
 
 var name = "ScriptKey"
-var fullname = "Auto$name"
+var fullname = "AutoScriptKey"
 version = "PRE-ALPHA"
 
-group = "org.${name.lowercase(Locale.getDefault())}"
+group = "org.scriptkey"
 
 application {
     mainClass.set("$group.Main")
