@@ -1,5 +1,9 @@
 package org.scriptkey;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -9,6 +13,8 @@ import java.util.Objects;
  * we set everything up.
  */
 public class Main {
+
+    private static final Logger LOG = LogManager.getLogger("LAUNCHER");
 
     private final Arguments arguments;
 
@@ -22,15 +28,20 @@ public class Main {
      * Such as Java and OS version, and runtime path.
      */
     private void printRuntimeInfo() {
-        System.out.println();
-        System.out.println(this.arguments);
+        String[] runtimeProperties = new String[] {
+                "Java: " + System.getProperty("java.vendor.version")
+                        + " (" + System.getProperty("java.runtime.version") + ")",
+                this.arguments.toString(),
+                "Run Directory: " + System.getProperty("user.dir"),
+                "OS: " + System.getProperty("os.name"),
+                "Architecture: " + System.getProperty("os.arch"),
+                "Console: " + System.console()
+        };
 
-        System.out.println("Java: " + System.getProperty("java.vendor.version")
-                + " (" + System.getProperty("java.runtime.version") + ")");
-        System.out.println("Run Directory: " + System.getProperty("user.dir"));
-        System.out.println("OS: " + System.getProperty("os.name"));
-        System.out.println("Architecture: " + System.getProperty("os.arch"));
-        System.out.println();
+        StringBuilder runtimeInfo = new StringBuilder();
+        Arrays.asList(runtimeProperties).forEach(prop -> runtimeInfo.append("\t").append(prop).append("\n"));
+
+        LOG.info("Runtime Info: \n" + runtimeInfo);
     }
 
     /**
@@ -43,7 +54,7 @@ public class Main {
      * @param args command line arguments.
      * */
     public static void main(String[] args) {
-        System.out.println("Running AutoScriptKey...");
+        System.out.println("Running AutoScriptKey Launcher...");
         Main main = new Main(new Arguments(args));
         main.printRuntimeInfo();
     }

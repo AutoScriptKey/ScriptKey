@@ -1,5 +1,8 @@
 package org.scriptkey;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -12,6 +15,8 @@ import java.util.*;
  */
 @SuppressWarnings("unused")
 public class Arguments {
+
+    private static final Logger LOG = LogManager.getLogger();
 
     /**
      * The prefix put before arguments which donate
@@ -57,7 +62,7 @@ public class Arguments {
                 if(kv.length == 2) {
                     options.put(kv[0], kv[1]);
                 } else {
-                    System.err.println("Invalid argument: " + arg);
+                    LOG.error("Invalid argument: " + arg);
                 }
             } else if(arg.startsWith(FLAG_PREFIX)) {
                 flags.add(arg.replace(FLAG_PREFIX, ""));
@@ -75,8 +80,7 @@ public class Arguments {
 
                     }
                 } catch (InvalidPathException e) {
-                    System.err.println("Invalid file argument: " + arg);
-                    System.err.println("Cause: " + e.getMessage());
+                    LOG.error("Invalid file argument: " + arg, e);
                 }
             }
         }
