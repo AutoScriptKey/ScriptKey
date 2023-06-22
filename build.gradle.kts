@@ -2,9 +2,10 @@ plugins {
     id("java"); id("application"); id("idea")
 }
 
+version = "PRE-ALPHA"
+
 var name = "ScriptKey"
 var fullname = "AutoScriptKey"
-version = "PRE-ALPHA"
 
 group = "org.scriptkey"
 
