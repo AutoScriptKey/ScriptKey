@@ -2,25 +2,27 @@ package org.scriptkey;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.scriptkey.common.ScriptKeyInfo;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Main class for the launcher.
- * This is where we figure out
- * what the user wants, and where
- * we set everything up.
+ * Main class for the AutoScriptKey launcher, and the main
+ * entry point for code execution. Where setup and execution
+ * of the main application is handled according to user input.
  */
 public class Main {
 
     private static final Logger LOG = LogManager.getLogger("LAUNCHER");
 
-    private final Arguments arguments;
+    private static final String APP_VERSION = ScriptKeyInfo.PROPERTIES.VERSION.getAsString();
 
     private Main(Arguments arguments) {
         this.arguments = Objects.requireNonNull(arguments);
     }
+
+    private final Arguments arguments;
 
     /**
      * Prints out information about the current
@@ -32,6 +34,7 @@ public class Main {
                 "Java: " + System.getProperty("java.vendor.version")
                         + " (" + System.getProperty("java.runtime.version") + ")",
                 this.arguments.toString(),
+                "Application Version: " + APP_VERSION,
                 "Run Directory: " + System.getProperty("user.dir"),
                 "OS: " + System.getProperty("os.name"),
                 "Architecture: " + System.getProperty("os.arch"),
@@ -52,7 +55,7 @@ public class Main {
      * the launcher.
      *
      * @param args command line arguments.
-     * */
+     */
     public static void main(String[] args) {
         System.out.println("Running AutoScriptKey Launcher...");
         Main main = new Main(new Arguments(args));
